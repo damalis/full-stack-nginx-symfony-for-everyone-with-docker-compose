@@ -37,6 +37,11 @@ Create rules to open ports to the internet, or to a specific IPv4 address or ran
 - [Manual Configuration and Installation](#manual)
 - [Portainer Installation](#portainer)
 - [Usage](#usage)
+	- [Website](#website)
+	- [Webserver](#webserver)
+	- [Redis](#redis)
+	- [phpMyAdmin](#phpmyadmin)
+	- [backup](#backup)					  
 
 ## Automatic
 
@@ -195,6 +200,10 @@ You can now use the `up` command:
 docker-compose up -d
 ```
 
+### Docker run reference
+
+[https://docs.docker.com/engine/reference/run/](https://docs.docker.com/engine/reference/run/)
+
 ### Website
 
 You should see the "Welcome to Symfony..." page in your browser. If not, please check if your PHP installation satisfies Symfony's requirements.
@@ -203,19 +212,13 @@ You should see the "Welcome to Symfony..." page in your browser. If not, please 
 https://example.com
 ```
 
-add or remove code in the ```./php-fpm/php/conf.d/security.ini``` file for custom php.ini configurations
+add or remove code in the ./php-fpm/php/conf.d/security.ini file for custom php.ini configurations
 
-Copy and paste the following code in the ```./php-fpm/php-fpm.d/z-www.conf``` file for php-fpm configurations at 1Gb Ram Host
+[https://www.php.net/manual/en/configuration.file.php](https://www.php.net/manual/en/configuration.file.php)
 
-```
-pm.max_children = 19
-pm.start_servers = 4
-pm.min_spare_servers = 2
-pm.max_spare_servers = 4
-pm.max_requests = 1000
-```
+You should make changes custom host configurations ```./php-fpm/php-fpm.d/z-www.conf``` then must restart service, FPM uses php.ini syntax for its configuration file - php-fpm.conf, and pool configuration files.
 
-Or you should make changes custom host configurations then must restart service
+[https://www.php.net/manual/en/install.fpm.configuration.php](https://www.php.net/manual/en/install.fpm.configuration.php)
 
 ```
 docker container restart symfony
@@ -254,7 +257,14 @@ class DefaultController extends AbstractController
 }
 ```
 
-Save it, and refresh your project page.										
+Save it, and refresh your project page.
+
+#### Webserver
+
+add or remove code in the ```./webserver/templates/nginx.conf.template``` file for custom nginx configurations
+
+[https://docs.nginx.com/nginx/admin-guide/basic-functionality/managing-configuration-files/](https://docs.nginx.com/nginx/admin-guide/basic-functionality/managing-configuration-files/)
+										
 #### Redis
 
 [Redis Cache](https://symfony.com/doc/current/components/cache/adapters/redis_adapter.html); This article explains how to configure the Redis adapter when using the Cache as an independent component in any PHP application..
